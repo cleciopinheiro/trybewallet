@@ -1,5 +1,5 @@
 import { ADD_EXPENSE, REQUEST_FETCH,
-  FETCH_CURRENCIES_SUCESS, FETCH_CURRENCIES_FAILURE } from '../actions';
+  FETCH_CURRENCIES_SUCESS, FETCH_CURRENCIES_FAILURE, DELETE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
   isFetching: false,
@@ -35,6 +35,12 @@ const walletReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       expenses: [...state.expenses, action.payload],
+    };
+
+  case DELETE_EXPENSE:
+    return {
+      ...state,
+      expenses: [...action.payload],
     };
 
   default: return state;

@@ -5,6 +5,7 @@ export const FETCH_CURRENCIES_SUCESS = 'FETCH_CURRENCIES_SUCESS';
 export const FETCH_CURRENCIES_FAILURE = 'FETCH_CURRENCIES_FAILURE';
 export const REQUEST_FETCH = 'REQUEST_FETCH';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const DELETE_EXPENSE = 'DELETE_EXPENSE';
 
 export const loginEmail = (email) => ({
   type: LOGIN_EMAIL,
@@ -30,6 +31,11 @@ export const fetchCurrenciesFailure = (errorMessage) => ({
 export const addExpense = (expense) => ({
   type: ADD_EXPENSE,
   payload: expense,
+});
+
+export const deleteExpense = (payload) => ({
+  type: DELETE_EXPENSE,
+  payload,
 });
 
 export const SET_CURRENCY = 'SET_CURRENCY';
