@@ -6,6 +6,8 @@ export const FETCH_CURRENCIES_FAILURE = 'FETCH_CURRENCIES_FAILURE';
 export const REQUEST_FETCH = 'REQUEST_FETCH';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
 export const DELETE_EXPENSE = 'DELETE_EXPENSE';
+export const START_EDIT = 'START_EDIT';
+export const FINISH_EDIT = 'FINISH_EXPENSE';
 
 export const loginEmail = (email) => ({
   type: LOGIN_EMAIL,
@@ -35,6 +37,16 @@ export const addExpense = (expense) => ({
 
 export const deleteExpense = (payload) => ({
   type: DELETE_EXPENSE,
+  payload,
+});
+
+export const editExpenseStart = (payload) => ({
+  type: START_EDIT,
+  payload,
+});
+
+export const editExpenseFinish = (payload) => ({
+  type: FINISH_EDIT,
   payload,
 });
 

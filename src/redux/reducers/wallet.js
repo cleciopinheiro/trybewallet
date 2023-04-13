@@ -1,4 +1,4 @@
-import { ADD_EXPENSE, REQUEST_FETCH,
+import { ADD_EXPENSE, REQUEST_FETCH, START_EDIT, FINISH_EDIT,
   FETCH_CURRENCIES_SUCESS, FETCH_CURRENCIES_FAILURE, DELETE_EXPENSE } from '../actions';
 
 const INITIAL_STATE = {
@@ -41,6 +41,21 @@ const walletReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       expenses: [...action.payload],
+    };
+
+  case START_EDIT:
+    return {
+      ...state,
+      editor: true,
+      idToEdit: action.payload,
+    };
+
+  case FINISH_EDIT:
+    return {
+      ...state,
+      expenses: action.payload,
+      editor: false,
+      idToEdit: 0,
     };
 
   default: return state;
