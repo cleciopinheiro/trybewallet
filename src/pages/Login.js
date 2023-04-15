@@ -1,71 +1,68 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { loginEmail } from '../redux/actions';
+import { loginAcess } from '../redux/actions/userAction';
 
 class Login extends React.Component {
   state = {
+    isDisable: true,
     email: '',
     password: '',
-    isDisabled: true,
   };
 
-  onInputChange = ({ target }) => {
+  handleChange = ({ target }) => {
+    const { name, value } = target;
     this.setState({
-      [target.name]: target.value,
-    }, this.validateForms);
+      [name]: value,
+    }, this.validateForm);
   };
 
-  validateForms = () => {
-    const { password, email } = this.state;
-    const emailValidate = /^\S+@\S+\.\S+$/;
+  validateForm = () => {
+    const { email, password } = this.state;
     const MIN = 6;
-    if (email.match(emailValidate) && password.length >= MIN) {
+    const validate = /^\S+@\S+\.\S+$/;
+
+    if (email.match(validate) && password.length >= MIN) {
       this.setState({
-        isDisabled: false,
+        isDisable: false,
       });
     } else {
       this.setState({
-        isDisabled: true,
+        isDisable: true,
       });
     }
   };
 
-  handleSubmit = (event) => {
-    event.preventDefault();
+  handleSubmit = () => {
+    const { dispatch, history } = this.props;
     const { email } = this.state;
-    const { history, dispatch } = this.props;
-    dispatch(loginEmail(email));
-    history.push('./carteira');
+    dispatch(loginAcess(email));
+    history.push('/carteira');
   };
 
   render() {
-    const { isDisabled, password, email } = this.state;
+    const { isDisable } = this.state;
     return (
       <main>
-        <h1>TRYBEWALLET</h1>
-        <form action="">
+        <form>
+          <h1>TRYBEWALLET</h1>
           <input
-            onChange={ this.onInputChange }
             data-testid="email-input"
             type="email"
             name="email"
-            value={ email }
-            id="email"
-            placeholder="Digite seu e-mail"
+            placeholder="Seu email"
+            onChange={ this.handleChange }
           />
           <input
-            onChange={ this.onInputChange }
             data-testid="password-input"
             type="password"
             name="password"
-            value={ password }
-            id="password"
-            placeholder="Digite sua senha"
+            placeholder="Sua senha"
+            onChange={ this.handleChange }
           />
           <button
-            disabled={ isDisabled }
             type="button"
+            disabled={ isDisable }
             onClick={ this.handleSubmit }
           >
             Entrar

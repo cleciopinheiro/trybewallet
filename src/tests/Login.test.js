@@ -1,17 +1,12 @@
 import { screen } from '@testing-library/react';
 
 import userEvent from '@testing-library/user-event';
-import App from '../App';
 import { renderWithRouterAndRedux } from './helpers/renderWith';
+import Login from '../pages/Login';
 
-describe('Crie uma página inicial de login com os seguintes campos e características', () => {
-  test('A rota para esta página é "/"', () => {
-    const { history } = renderWithRouterAndRedux(<App />);
-    expect(history.location.pathname).toBe('/');
-  });
-
-  test('É renderizado um elemento para que o usuário insira seu email e senha', () => {
-    renderWithRouterAndRedux(<App />);
+describe('Página Login', () => {
+  test('Verifica se é renderizdo um input de email e senha', () => {
+    renderWithRouterAndRedux(<Login />);
 
     const email = screen.getByRole('textbox');
     const password = screen.getByRole('textbox');
@@ -20,8 +15,8 @@ describe('Crie uma página inicial de login com os seguintes campos e caracterí
     expect(password).toBeInTheDocument();
   });
 
-  test('É renderizado um botão com o texto "Entrar"', () => {
-    renderWithRouterAndRedux(<App />);
+  test('Verifique se é renderizado um botão com o texto "Entrar"', () => {
+    renderWithRouterAndRedux(<Login />);
 
     const button = screen.getByRole('button', {
       name: /entrar/i,
@@ -30,8 +25,8 @@ describe('Crie uma página inicial de login com os seguintes campos e caracterí
     expect(button).toBeInTheDocument();
   });
 
-  test('Foram realizadas as verificações nos campos de email, senha e botão', () => {
-    renderWithRouterAndRedux(<App />);
+  test('Realize as verificações nos campos de email, senha', () => {
+    renderWithRouterAndRedux(<Login />);
 
     const email = screen.getByRole('textbox');
     const password = screen.getByTestId('password-input');
@@ -41,12 +36,15 @@ describe('Crie uma página inicial de login com os seguintes campos e caracterí
 
     userEvent.type(email, 'teste@teste.com');
     userEvent.type(password, '123456');
-
     expect(button.disabled).toBe(false);
+
+    userEvent.type(email, 'teste');
+    userEvent.type(password, '123456');
+    expect(button.disabled).toBe(true);
   });
 
-  test('Salva o email no estado da aplicação, com a chave email, assim que o usuário logar', () => {
-    const { store } = renderWithRouterAndRedux(<App />);
+  test('Verifica se o email no estado da aplicação, com a chave email, assim que o usuário logar', () => {
+    const { store } = renderWithRouterAndRedux(<Login />);
 
     const email = screen.getByRole('textbox');
     const button = screen.getByRole('button', {
@@ -62,7 +60,7 @@ describe('Crie uma página inicial de login com os seguintes campos e caracterí
   });
 
   test('A rota é alterada para "/carteira" após o clique no botão', () => {
-    const { history } = renderWithRouterAndRedux(<App />);
+    const { history } = renderWithRouterAndRedux(<Login />);
 
     const button = screen.getByRole('button', {
       name: /entrar/i,
